@@ -2,7 +2,7 @@ from git import Repo
 
 
 from flask import request,Flask,render_template,redirect
-import datetime
+
 
 app = Flask(__name__)
 
@@ -27,7 +27,7 @@ def addNote():
         # get the fields data
         title = request.form['title']
         description = request.form['description']
-        createdAt = datetime.datetime.now()
+        
 
         f=open(title+'.txt',"w+")
         f.write(description)
