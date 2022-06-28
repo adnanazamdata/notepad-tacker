@@ -1,3 +1,6 @@
+from git import Repo
+
+
 from flask import request,Flask,render_template,redirect
 import datetime
 
@@ -27,8 +30,13 @@ def addNote():
         description = request.form['description']
         createdAt = datetime.datetime.now()
 
-        # save the record to the database
-        #mongo.db.notes.insert({"title":title,"description":description,"createdAt":createdAt})
+        f=open(title,"w+")
+        f.write(description)
+        f.close()
+
+        repo = Repo('./')
+        repo.git.add('--all')
+        repo.git.commit('-m', 'commit message from python script')
 
         # redirect to home page
         return redirect("/")
@@ -66,6 +74,7 @@ def editNote():
 
 
 app.run()
+
 
 
 
