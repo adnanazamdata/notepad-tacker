@@ -30,7 +30,7 @@ def addNote():
         description = request.form['description']
         createdAt = datetime.datetime.now()
 
-        f=open(title,"w+")
+        f=open(title+'.txt',"w+")
         f.write(description)
         f.close()
 
