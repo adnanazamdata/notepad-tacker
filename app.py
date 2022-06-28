@@ -8,8 +8,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    # get the notes from the database
-    #notes = list(mongo.db.notes.find({}).sort("createdAt",-1));
+   
 
     # render a view
     return render_template("home.html",homeIsActive=True,addNoteIsActive=False)
@@ -49,28 +48,36 @@ def editNote():
 
     if request.method == "GET":
 
-        # get the id of the note to edit
-        noteId = request.args.get('form')
-
-
-        # get the note details from the db
-        #note = dict(mongo.db.notes.find_one({"_id":ObjectId(noteId)}))
-
+       
         # direct to edit note page
         return render_template('edit-note.html')
 
     elif request.method == "POST":
 
-        #get the data of the note
-        noteId = request.form['_id']
+        global title 
         title = request.form['title']
-        description = request.form['description']
-
-        # update the data in the db
-        #mongo.db.notes.update_one({"_id":ObjectId(noteId)},{"$set":{"title":title,"description":description}})
-
+        f = open(title+'.txt', "r")
+        var = f.read()
+        
         # redirect to home page
-        return redirect("/")
+        return render_template('description.html',note=var)
+
+
+@app.route('/save-note', methods=['GET','POST'])
+def saveNote():
+    global title
+    description = request.form['description']
+    f=open(title+'.txt',"w+")
+    f.write(description)
+    f.close()
+
+    repo = Repo('./')
+    repo.git.add('--all')
+    repo.git.commit('-m', 'commit message from python script')
+
+    # redirect to home page
+    return redirect("/")
+    
 
 
 app.run()

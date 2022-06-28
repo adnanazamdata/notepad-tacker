@@ -1,5 +1,6 @@
 {% extends 'base.html'%} {% block title %} Home {% endblock %} {% block content
 %}
+<h1>{{ var }}</h1>
 <div class="container mt-5 mb-5 px-10 ">
 	<div class="row">
 		{% if (notes is defined) and notes %} {% for note in notes %}
@@ -25,8 +26,9 @@
 		</div>
 		{% endfor %} {% else %}
 		<div class="col-md-6 offset-md-3 text-center">
-			<h4>You have not added any notes</h4>
+			<h4>Welcome to Notepad Tracker</h4>
 			<a href="/add-note" class="btn btn-primary"> Add note </a>
+			<a href="/edit-note" class="btn btn-primary"> Edit note </a>
 		</div>
 		{% endif %}
 	</div>
